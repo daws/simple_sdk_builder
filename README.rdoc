@@ -1,0 +1,60 @@
+= Simple Json SDK Builder
+
+A set of libraries that make it easy to build an SDK gem on top of a RESTful JSON web service.
+
+== Synopsis:
+
+ class MyNotFoundError < StandardError; end
+ class MyUnknownError < StandardError; end
+
+ class MyBaseClass
+   include SimpleJsonSDKBuilder::Base
+
+   def simple_json_error_handlers
+     {
+       '404' => MyNotFoundError,
+       '*' => MyUnknownError
+     }
+   end
+ end
+
+ class MyResource < MyBaseClass
+   include SimpleJsonSDKBuilder::Resource
+
+   simple_json_attribute :id, :name, :value
+
+   class << self
+
+     def all
+       simple_json_request( :path => "/my_resources", :build => MyResource )
+     end
+
+     def find(id)
+       simple_json_request( :path => "/my_resources/#{id}", :build => MyResource )
+     end
+
+   end
+
+   def create
+     result_json = simple_json_request( :path => "/my_resources", :method => :post, :body => my_resource )
+     self.from_json(result_json)
+   end
+
+   def update(attrs)
+     result_json = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
+     self.from_json(result_json)
+   end
+
+   def destroy
+     simple_json_request( :path => "/my_resources/#{id}", :method => :delete )
+     # leaves current object alone
+   end
+
+ end
+
+ all_resources = MyResource.all
+ some_resource = MyResource.find(1)
+ new_resource = MyResource.new( :name => 'test', :value => 'this is a test' ).create
+ new_resource.update( :value => 'this test is almost done...' )
+ new_resource.destroy
+
