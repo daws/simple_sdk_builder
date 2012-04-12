@@ -6,6 +6,7 @@ module Resource
   def self.included(klass)
     klass.class_eval do
       include ActiveModel::Serializers::JSON
+      self.include_root_in_json = false
     end
 
     klass.extend ClassMethods
