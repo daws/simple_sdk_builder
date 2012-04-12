@@ -4,18 +4,24 @@ A set of libraries that make it easy to build an SDK gem on top of a RESTful JSO
 
 == Synopsis:
 
- class MyNotFoundError < StandardError; end
+ class MyNotFoundError < StandardError
+   def initialize(response)
+     super "object not found: #{response.body}"
+   end
+ end
+
  class MyUnknownError < StandardError; end
 
  class MyBaseClass
    include SimpleJsonSDKBuilder::Base
 
-   def simple_json_error_handlers
-     {
-       '404' => MyNotFoundError,
-       '*' => MyUnknownError
-     }
-   end
+   config :service_url => 'https://api.davidmdawson.com'
+   config :timeout => 15000
+   config :error_handlers => {
+     '404' => MyNotFoundError,
+     '*' => MyUnknownError
+   }
+
  end
 
  class MyResource < MyBaseClass
@@ -36,13 +42,15 @@ A set of libraries that make it easy to build an SDK gem on top of a RESTful JSO
    end
 
    def create
-     result_json = simple_json_request( :path => "/my_resources", :method => :post, :body => my_resource )
-     self.from_json(result_json)
+     result = simple_json_request( :path => "/my_resources", :method => :post, :body => self )
+     self.attributes = result
+     self
    end
 
    def update(attrs)
-     result_json = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
-     self.from_json(result_json)
+     result = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
+     self.attributes = result
+     self
    end
 
    def destroy
