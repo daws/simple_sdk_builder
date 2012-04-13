@@ -49,24 +49,14 @@ module Base
         :timeout => options[:timeout],
         :headers => options[:headers],
         :params => options[:params],
-        :body => request_body,
+        :body => request_body
 
       hydra.queue(request)
       hydra.run
 
       response = request.response
       check_response(response)
-
-      if options[:build]
-        json_response = JSON.parse(response.body)
-        if json_response.is_a?(Array)
-          json_response.collect { |value| options[:build].new.from_json(value.to_json) }
-        else
-          options[:build].new.from_json(response.body)
-        end
-      else
-        JSON.parse(response.body)
-      end
+      Response.new(response)
     end
 
     def check_response(response)

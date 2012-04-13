@@ -32,24 +32,26 @@ A set of libraries that make it easy to build an SDK gem on top of a RESTful JSO
    class << self
 
      def all
-       simple_json_request( :path => "/my_resources", :build => MyResource )
+       response = simple_json_request( :path => "/my_resources" )
+       response.build(MyResource)
      end
 
      def find(id)
-       simple_json_request( :path => "/my_resources/#{id}", :build => MyResource )
+       response = simple_json_request( :path => "/my_resources/#{id}" )
+       response.build(MyResource)
      end
 
    end
 
    def create
-     result = simple_json_request( :path => "/my_resources", :method => :post, :body => self )
-     self.attributes = result
+     response = simple_json_request( :path => "/my_resources", :method => :post, :body => self )
+     self.attributes = response.parsed_body
      self
    end
 
    def update(attrs)
-     result = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
-     self.attributes = result
+     response = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
+     self.attributes = response.parsed_body
      self
    end
 

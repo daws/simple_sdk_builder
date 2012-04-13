@@ -103,7 +103,7 @@ describe Base do
     end
 
     it 'should default to a GET /' do
-      subject.simple_json_request.should == { 'foo' => 'bar' }
+      subject.simple_json_request.parsed_body.should == { 'foo' => 'bar' }
     end
 
     context 'with a serializable foo class' do
@@ -116,7 +116,8 @@ describe Base do
       end
 
       it 'should build a foo class when requested' do
-        result = subject.simple_json_request(:build => @foo_class)
+        response = subject.simple_json_request
+        result = response.build(@foo_class)
         result.should be_a(@foo_class)
         result.attributes.should == 'bar'
       end
