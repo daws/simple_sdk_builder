@@ -27,6 +27,7 @@ module Base
         :path => '/',
         :method => :get,
         :body => nil,
+        :params => nil,
         :build => false
       }).merge(options)
 
@@ -47,7 +48,8 @@ module Base
         :method => options[:method],
         :timeout => options[:timeout],
         :headers => options[:headers],
-        :body => request_body
+        :params => options[:params],
+        :body => request_body,
 
       hydra.queue(request)
       hydra.run
