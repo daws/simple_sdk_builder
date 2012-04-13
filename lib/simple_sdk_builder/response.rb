@@ -1,6 +1,6 @@
 require 'json'
 
-module SimpleJsonSDKBuilder
+module SimpleSDKBuilder
 class Response
 
   def initialize(typhoeus_response)

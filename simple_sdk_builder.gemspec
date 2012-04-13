@@ -1,10 +1,10 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'simple_json_sdk_builder', 'version'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'simple_sdk_builder', 'version'))
 
 Gem::Specification.new do |s|
 
   # definition
-  s.name = %q{simple_json_sdk_builder}
-  s.version = SimpleJsonSDKBuilder::VERSION
+  s.name = %q{simple_sdk_builder}
+  s.version = SimpleSDKBuilder::VERSION
 
   # details
   s.date = %q{2012-04-12}
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{A set of libraries that supports building an object-oriented ruby SDK on top of a RESTful JSON web service.}
   s.authors = [ 'David Dawson' ]
   s.email = %q{daws23@gmail.com}
-  s.homepage = %q{https://github.com/daws/simple_json_sdk_builder}
+  s.homepage = %q{https://github.com/daws/simple_sdk_builder}
   s.require_paths = [ 'lib' ]
   
   # documentation

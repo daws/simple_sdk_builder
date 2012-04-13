@@ -1,6 +1,6 @@
 require 'active_support/core_ext/hash'
 
-module SimpleJsonSDKBuilder
+module SimpleSDKBuilder
 module Resource
 
   def self.included(klass)
@@ -21,7 +21,7 @@ module Resource
   end
 
   def attributes=(attributes)
-    self.class.simple_json_attributes.each do |attr|
+    self.class.simple_sdk_attributes.each do |attr|
       self.send("#{attr}=", attributes[attr])
     end
   end
@@ -30,10 +30,10 @@ module Resource
 
   module ClassMethods
 
-    def simple_json_attribute(*attrs)
+    def simple_sdk_attribute(*attrs)
       attrs.each do |attr|
         attr = attr.to_s
-        simple_json_attributes.push(attr)
+        simple_sdk_attributes.push(attr)
         define_method attr do
           @attributes[attr]
         end
@@ -43,8 +43,8 @@ module Resource
       end
     end
 
-    def simple_json_attributes
-      @simple_json_attributes ||= []
+    def simple_sdk_attributes
+      @simple_sdk_attributes ||= []
     end
 
   end

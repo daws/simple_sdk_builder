@@ -8,10 +8,10 @@
 #    autoload :MyClass, 'my_gem/my_class'
 #  end
 
-module SimpleJsonSDKBuilder
+module SimpleSDKBuilder
 
-  autoload :Base, 'simple_json_sdk_builder/base'
-  autoload :Resource, 'simple_json_sdk_builder/resource'
-  autoload :Response, 'simple_json_sdk_builder/response'
+  autoload :Base, 'simple_sdk_builder/base'
+  autoload :Resource, 'simple_sdk_builder/resource'
+  autoload :Response, 'simple_sdk_builder/response'
 
 end

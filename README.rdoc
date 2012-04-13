@@ -1,6 +1,8 @@
-= Simple Json SDK Builder
+= Simple SDK Builder
 
-A set of libraries that make it easy to build an SDK gem on top of a RESTful JSON web service.
+A set of libraries that make it easy to build an SDK gem on top of an HTTP web service.
+
+Currently, only RESTful JSON services are supported.
 
 == Synopsis:
 
@@ -13,7 +15,7 @@ A set of libraries that make it easy to build an SDK gem on top of a RESTful JSO
  class MyUnknownError < StandardError; end
 
  class MyBaseClass
-   include SimpleJsonSDKBuilder::Base
+   include SimpleSDKBuilder::Base
 
    config :service_url => 'https://api.davidmdawson.com'
    config :timeout => 15000
@@ -25,38 +27,38 @@ A set of libraries that make it easy to build an SDK gem on top of a RESTful JSO
  end
 
  class MyResource < MyBaseClass
-   include SimpleJsonSDKBuilder::Resource
+   include SimpleSDKBuilder::Resource
 
-   simple_json_attribute :id, :name, :value
+   simple_sdk_attribute :id, :name, :value
 
    class << self
 
      def all
-       response = simple_json_request( :path => "/my_resources" )
+       response = json_request( :path => "/my_resources" )
        response.build(MyResource)
      end
 
      def find(id)
-       response = simple_json_request( :path => "/my_resources/#{id}" )
+       response = json_request( :path => "/my_resources/#{id}" )
        response.build(MyResource)
      end
 
    end
 
    def create
-     response = simple_json_request( :path => "/my_resources", :method => :post, :body => self )
+     response = json_request( :path => "/my_resources", :method => :post, :body => self )
      self.attributes = response.parsed_body
      self
    end
 
    def update(attrs)
-     response = simple_json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
+     response = json_request( :path => "/my_resources/#{id}", :method => :put, :body => attrs )
      self.attributes = response.parsed_body
      self
    end
 
    def destroy
-     simple_json_request( :path => "/my_resources/#{id}", :method => :delete )
+     json_request( :path => "/my_resources/#{id}", :method => :delete )
      # leaves current object alone
    end
 

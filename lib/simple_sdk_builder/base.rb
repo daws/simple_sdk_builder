@@ -3,7 +3,7 @@ require 'json'
 require 'simply_configurable'
 require 'typhoeus'
 
-module SimpleJsonSDKBuilder
+module SimpleSDKBuilder
 module Base
 
   def self.included(klass)
@@ -14,15 +14,15 @@ module Base
     klass.extend ClassMethods
   end
 
-  def simple_json_request(options = {})
-    self.class.simple_json_request(options)
+  def json_request(options = {})
+    self.class.json_request(options)
   end
 
   private
 
   module ClassMethods
 
-    def simple_json_request(options = {})
+    def json_request(options = {})
       options = config.merge({
         :path => '/',
         :method => :get,

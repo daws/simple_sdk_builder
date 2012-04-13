@@ -1,4 +1,4 @@
-= Simple Json SDK Builder
+= Simple SDK Builder
 
 == Version 0.0.0
 * Change information here
