@@ -6,12 +6,32 @@ require 'typhoeus'
 module SimpleSDKBuilder
 module Base
 
+  DEFAULT_TIMEOUT_MILLISECONDS = 15000
+
   def self.included(klass)
     klass.class_eval do
       include SimplyConfigurable
     end
 
     klass.extend ClassMethods
+
+    klass.config :service_url => "http://localhost:3000/v1"
+    klass.config :timeout => DEFAULT_TIMEOUT_MILLISECONDS
+    klass.config :error_handlers => {
+      nil => ConnectionError,
+      '404' => NotFoundError,
+      '422' => RequestError,
+      '*' => UnknownError
+    }
+    klass.config :logger => default_logger
+  end
+
+  def ==(other)
+    self.equal?(other) || (self.id && self.id == other.id && self.class == other.class)
+  end
+
+  def eql?(other)
+    self == other
   end
 
   def json_request(options = {})
@@ -19,6 +39,16 @@ module Base
   end
 
   private
+
+  def self.default_logger
+    if defined?(::Rails)
+      ::Rails.logger
+    else
+      logger = ::Logger.new(STDERR)
+      logger.level = ::Logger::INFO
+      logger
+    end
+  end
 
   module ClassMethods
 

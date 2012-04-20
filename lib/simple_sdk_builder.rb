@@ -8,6 +8,8 @@
 #    autoload :MyClass, 'my_gem/my_class'
 #  end
 
+require 'simple_sdk_builder/errors'
+
 module SimpleSDKBuilder
 
   autoload :Base, 'simple_sdk_builder/base'
