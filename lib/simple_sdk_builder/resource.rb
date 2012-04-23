@@ -1,3 +1,4 @@
+require 'active_model'
 require 'active_support/core_ext/hash'
 
 module SimpleSDKBuilder
@@ -5,6 +6,8 @@ module Resource
 
   def self.included(klass)
     klass.class_eval do
+      extend ActiveModel::Naming
+      include ActiveModel::Conversion
       include ActiveModel::Serializers::JSON
       self.include_root_in_json = false
     end
@@ -21,9 +24,15 @@ module Resource
   end
 
   def attributes=(attributes)
-    self.class.simple_sdk_attributes.each do |attr|
-      self.send("#{attr}=", attributes[attr])
+    attributes.each do |key, value|
+      if self.class.simple_sdk_attributes.include?(key.to_s)
+        self.send("#{key}=", value)
+      end
     end
+  end
+
+  def persisted?
+    !!id
   end
 
   private

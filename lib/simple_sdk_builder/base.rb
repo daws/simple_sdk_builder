@@ -38,6 +38,10 @@ module Base
     self.class.json_request(options)
   end
 
+  def logger
+    self.class.logger
+  end
+
   private
 
   def self.default_logger
@@ -81,6 +85,8 @@ module Base
         :params => options[:params],
         :body => request_body
 
+      logger.debug "running HTTP #{options[:method]}: #{url}; PARAMS: #{options[:params]}; BODY: #{request_body}"
+
       hydra.queue(request)
       hydra.run
 
@@ -119,6 +125,10 @@ module Base
       end
 
       raise error_handlers['*'], "an error occurred with the response; code: #{response.code}; body: #{response.body};"
+    end
+
+    def logger
+      config[:logger]
     end
 
   end
