@@ -85,12 +85,15 @@ module Base
         :params => options[:params],
         :body => request_body
 
-      logger.debug "running HTTP #{options[:method]}: #{url}; PARAMS: #{options[:params]}; BODY: #{request_body}"
+      logger.debug "running HTTP #{options[:method]}: #{url}; PARAMS: #{options[:params]}; BODY: #{request_body};"
 
       hydra.queue(request)
       hydra.run
 
       response = request.response
+
+      logger.debug "received response code #{response.code}; BODY: #{response.body};"
+
       check_response(response)
       Response.new(response)
     end

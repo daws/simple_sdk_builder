@@ -15,5 +15,6 @@ module SimpleSDKBuilder
   autoload :Base, 'simple_sdk_builder/base'
   autoload :Resource, 'simple_sdk_builder/resource'
   autoload :Response, 'simple_sdk_builder/response'
+  autoload :SearchResults, 'simple_sdk_builder/search_results'
 
 end

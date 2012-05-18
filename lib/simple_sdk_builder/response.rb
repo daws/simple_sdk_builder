@@ -16,7 +16,7 @@ class Response
   end
 
   def headers
-    @typhoeus_response.headers
+    @typhoeus_response.headers_hash
   end
 
   def body
@@ -33,6 +33,10 @@ class Response
     else
       type.new.from_json(body)
     end
+  end
+
+  def build_search_results(type)
+    SearchResults.new(self, type)
   end
 
 end
