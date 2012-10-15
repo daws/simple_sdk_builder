@@ -1,4 +1,4 @@
 = Simple SDK Builder
 
-== Version 0.0.0
-* Change information here
+== Version 1.0.0
+* Initial release of gem
