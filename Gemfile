@@ -1,3 +1,5 @@
+source :rubygems
+
 gem 'activemodel', '~> 3.0', :require => nil
 gem 'activesupport', '~> 3.0', :require => nil
 gem 'json', '~> 1.6', :require => nil
