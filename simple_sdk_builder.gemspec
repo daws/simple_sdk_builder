@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
   s.files = Dir[ 'lib/**/*.rb', 'README.rdoc', 'CHANGELOG.rdoc', 'LICENSE.txt' ]
 
   # dependencies
-  s.add_dependency 'activemodel', '~> 3.0'
-  s.add_dependency 'activesupport', '~> 3.0'
+  s.add_dependency 'activemodel', '>= 3.0'
+  s.add_dependency 'activesupport', '>= 3.0'
   s.add_dependency 'json', '~> 1.6'
   s.add_dependency 'simply_configurable', '~> 0.1'
   s.add_dependency 'typhoeus', '~> 0.3'

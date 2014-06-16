@@ -1,4 +1,7 @@
 = Simple SDK Builder
 
+== Version 1.0.1
+* Loosened activesupport version requirement
+
 == Version 1.0.0
 * Initial release of gem

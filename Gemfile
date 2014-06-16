@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'activemodel', '~> 3.0', :require => nil
 gem 'activesupport', '~> 3.0', :require => nil
