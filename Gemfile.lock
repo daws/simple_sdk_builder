@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_sdk_builder (1.0.1)
+    simple_sdk_builder (1.0.2)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       json (~> 1.6)

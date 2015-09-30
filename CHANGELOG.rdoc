@@ -1,5 +1,8 @@
 = Simple SDK Builder
 
+== Version 1.0.2
+* Fixed error handling - allowing custom error handlers for connection/timeout errors and wildcard (*) errors to access the response instead of just an error string.
+
 == Version 1.0.1
 * Loosened activesupport version requirement
 
