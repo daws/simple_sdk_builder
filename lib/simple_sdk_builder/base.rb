@@ -102,16 +102,14 @@ module Base
       return if response.code.to_s =~ /^2/
 
       error_handlers = config[:error_handlers] || {}
-      error_handlers[nil] ||= StandardError
-      error_handlers['*'] ||= StandardError
 
       if response.timed_out?
-        raise error_handlers[nil], "timed out before receiving response"
+        raise_response_error(error_handlers[nil], response, 'timed out before receiving response')
       end
 
       # search for exact match
       error_handlers.each do |key, error|
-        if key.is_a?(String) || key.is_a?(Symbol)
+        if key.is_a?(Integer) || key.is_a?(String) || key.is_a?(Symbol)
           if response.code.to_s == key.to_s
             raise error, response
           end
@@ -127,11 +125,25 @@ module Base
         end
       end
 
-      raise error_handlers['*'], "an error occurred with the response; code: #{response.code}; body: #{response.body};"
+      raise_response_error(
+        error_handlers['*'],
+        response,
+        "an error occurred with the response; code: #{response.code}; body: #{response.body};"
+      )
     end
 
     def logger
       config[:logger]
+    end
+
+    private
+
+    def raise_response_error(error_handler, response, default_message)
+      if error_handler
+        raise error_handler, response
+      else
+        raise StandardError, default_message
+      end
     end
 
   end

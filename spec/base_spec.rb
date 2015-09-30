@@ -96,7 +96,7 @@ describe Base do
       hydra = Typhoeus::Hydra.new
 
       response = Typhoeus::Response.new(:code => 200, :headers => '', :body => %{{"foo":"bar"}}, :time => 0.3)
-      hydra.stub(:get, 'https://api.davidmdawson.com/').and_return(response)
+      Typhoeus.stub('https://api.davidmdawson.com/').and_return(response)
 
       @base_class.config :service_url => 'https://api.davidmdawson.com'
       @base_class.config :hydra => hydra
@@ -119,7 +119,7 @@ describe Base do
         response = subject.json_request
         result = response.build(@foo_class)
         result.should be_a(@foo_class)
-        result.attributes.should == 'bar'
+        result.attributes.should == { 'foo' => 'bar' }
       end
 
     end
