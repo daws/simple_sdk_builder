@@ -1,5 +1,8 @@
 = Simple SDK Builder
 
+== Version 1.1.0
+* Added polymorphic nested attributes. Requires "#{field_name}_type" to be set with name of class that attribute should be constructed with
+
 == Version 1.0.2
 * Fixed error handling - allowing custom error handlers for connection/timeout errors and wildcard (*) errors to access the response instead of just an error string.
 
