@@ -48,8 +48,9 @@ module Resource
 
   def build_attribute(attr, value, options)
     options = {
-      :class_name => nil,
-      :nested => false
+      class_name: nil,
+      nested: false,
+      polymorphic: false
     }.merge(options)
 
     if options[:nested] && value.is_a?(Array)
@@ -61,7 +62,7 @@ module Resource
       end
       build_attribute(attr, arr, options)
     elsif options[:nested] && value.is_a?(Hash)
-      class_name = options[:class_name] || guess_class_name(attr)
+      class_name = options[:class_name] || guess_class_name(attr, value, options[:polymorphic])
       nested_class = eval(class_name)
       nested_class.new(value)
     else
@@ -69,15 +70,20 @@ module Resource
     end
   end
 
-  def guess_class_name(attr)
+  def guess_class_name(attr, value, polymorphic = false)
     namespace = ''
     class_name = self.class.name
     if class_name.rindex(':')
       namespace = class_name[0..class_name.rindex(':')]
     end
     attr.chomp!("_attributes")
-    result = "#{namespace}#{attr.camelize.singularize}"
-    result
+
+    if polymorphic
+      class_name = value.with_indifferent_access[:type]
+      "#{namespace}#{class_name}"
+    else
+      "#{namespace}#{attr.camelize.singularize}"
+    end
   end
 
   module ClassMethods
