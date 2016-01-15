@@ -1,5 +1,8 @@
 = Simple SDK Builder
 
+== Version 1.1.1
+* Handling resources without an id
+
 == Version 1.1.0
 * Added polymorphic nested attributes. Requires "#{field_name}_type" to be set with name of class that attribute should be constructed with
 
