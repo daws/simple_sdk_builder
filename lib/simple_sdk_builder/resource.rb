@@ -37,7 +37,7 @@ module Resource
   end
 
   def persisted?
-    !!id
+    respond_to?(:id) && (!!id)
   end
 
   private
