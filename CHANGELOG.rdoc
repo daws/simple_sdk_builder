@@ -1,5 +1,8 @@
 = Simple SDK Builder
 
+== Version 1.2.0
+* Adding ability to designate a nested attribute as "signular", so it will be nil instead of an empty array when missing
+
 == Version 1.1.1
 * Handling resources without an id
 
