@@ -103,13 +103,14 @@ module Resource
 
     def simple_sdk_nested_attribute(attr, options = {})
       options = {
-        :nested => true
+        nested: true,
+        singular: false
       }.merge(options)
       attr = attr.to_s
       simple_sdk_attributes.push(attr)
       simple_sdk_attributes.push("#{attr}_attributes") # for ActiveRecord nested attributes
       define_method attr do
-        @attributes[attr] ||= []
+        @attributes[attr] ||= options[:singular] ? nil : []
       end
       alias_method :"#{attr}_attributes", :"#{attr}" # for ActiveRecord nested attributes
       define_method "#{attr}=" do |value|
